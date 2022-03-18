@@ -20,7 +20,7 @@ class LauncherTest {
 
     @ParameterizedTest
     @CsvSource({
-        "0000, hello"
+        "9876, 9876"
     })
     void main_test_cases(String a, String b) {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
