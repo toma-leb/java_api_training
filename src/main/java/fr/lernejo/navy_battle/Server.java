@@ -10,7 +10,8 @@ public class Server {
     public static HttpServer create(int port) {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-            server.createContext("/ping", new MyHandler());
+            server.createContext("/ping", new PingHandler());
+            server.createContext("/api/game/start", new StartHandler());
             server.setExecutor(Executors.newSingleThreadExecutor());
             server.start();
             return server;
