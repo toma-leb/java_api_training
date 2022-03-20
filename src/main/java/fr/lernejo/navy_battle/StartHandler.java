@@ -13,6 +13,8 @@ public class StartHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        Sender sender = new Sender();
+
         if (exchange.getRequestMethod().equals("POST")) {
             String request = StreamReader.toString(exchange.getRequestBody());
             POST received = new ObjectMapper().readValue(request,POST.class);
@@ -23,10 +25,10 @@ public class StartHandler implements HttpHandler {
             send.message = "Here I am !";
             String body = new ObjectMapper().writeValueAsString(send);
 
-            Sender.response(exchange,202, body);
+            sender.response(exchange,202, body);
         }
         else {
-            Sender.response(exchange,404,"Not Found");
+            sender.response(exchange,404,"Not Found");
         }
     }
 }

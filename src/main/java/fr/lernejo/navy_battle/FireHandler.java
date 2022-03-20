@@ -1,7 +1,6 @@
 package fr.lernejo.navy_battle;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -12,6 +11,9 @@ public class FireHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+
+        Sender sender = new Sender();
+
         if (exchange.getRequestMethod().equals("GET")) {
             List<String> cell = exchange.getRequestHeaders().get("cell");
             String shootAt = cell.get(0);
@@ -31,10 +33,10 @@ public class FireHandler implements HttpHandler {
             send.shipLeft = true;
             String body = new ObjectMapper().writeValueAsString(send);
 
-            Sender.response(exchange,202, body);
+            sender.response(exchange,202, body);
         }
         else {
-            Sender.response(exchange,404,"Not Found");
+            sender.response(exchange,404,"Not Found");
         }
     }
 }

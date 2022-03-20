@@ -10,14 +10,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class Sender {
-    public static void response(HttpExchange exchange, int code, String body) throws IOException {
+    public void response(HttpExchange exchange, int code, String body) throws IOException {
         exchange.sendResponseHeaders(code, body.length());
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(body.getBytes());
         }
     }
 
-    public static HttpResponse<String> postRequest(String url, String body) throws IOException, InterruptedException {
+    public HttpResponse<String> postRequest(String url, String body) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))
@@ -28,7 +28,7 @@ public class Sender {
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public static HttpResponse<String> getRequest(String url, String ShootAt) throws IOException, InterruptedException {
+    public HttpResponse<String> getRequest(String url, String ShootAt) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))

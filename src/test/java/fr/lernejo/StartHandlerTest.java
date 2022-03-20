@@ -19,6 +19,7 @@ public class StartHandlerTest {
     })
     void postResponseTest(String port) throws IOException, InterruptedException {
         HttpServer server = Server.create(Integer.parseInt(port));
+        Sender sender = new Sender();
 
         POST send = new POST();
         send.id = "0";
@@ -26,7 +27,7 @@ public class StartHandlerTest {
         send.message = "Are you there ?";
         String body = new ObjectMapper().writeValueAsString(send);
 
-        HttpResponse<String> response = Sender.postRequest("http://localhost:"+port+"/api/game/start", body);
+        HttpResponse<String> response = sender.postRequest("http://localhost:"+port+"/api/game/start", body);
         POST mapper = new ObjectMapper().readValue(response.body(),POST.class);
 
         Assertions.assertThat(mapper.id).isEqualTo("1");

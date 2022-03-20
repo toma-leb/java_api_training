@@ -20,8 +20,9 @@ public class FireHandlerTest {
     })
     void getResponseTest(String port) throws IOException, InterruptedException {
         HttpServer server = Server.create(Integer.parseInt(port));
+        Sender sender = new Sender();
 
-        HttpResponse<String> response = Sender.getRequest("http://localhost:"+port+"/api/game/fire","A1");
+        HttpResponse<String> response = sender.getRequest("http://localhost:"+port+"/api/game/fire","A1");
         GET mapper = new ObjectMapper().readValue(response.body(),GET.class);
 
         Assertions.assertThat(mapper.consequence).isEqualTo("miss");
