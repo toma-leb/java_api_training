@@ -1,10 +1,6 @@
 package fr.lernejo.navy_battle;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpServer;
-
-import java.io.IOException;
-import java.net.http.HttpResponse;
 
 public class Launcher {
     public static void main(String [] args) {

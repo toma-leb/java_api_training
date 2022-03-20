@@ -18,7 +18,7 @@ public class StartHandlerTest {
         "9879"
     })
     void postResponseTest(String port) throws IOException, InterruptedException {
-        HttpServer server1 = Server.create(Integer.parseInt(port));
+        HttpServer server = Server.create(Integer.parseInt(port));
 
         POST send = new POST();
         send.id = "0";

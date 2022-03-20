@@ -27,4 +27,16 @@ public class Sender {
             .build();
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
+
+    public static HttpResponse<String> getRequest(String url, String ShootAt) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(url))
+            .setHeader("Accept", "application/json")
+            .setHeader("Content-Type", "application/json")
+            .setHeader("cell",ShootAt)
+            .GET()
+            .build();
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
 }
