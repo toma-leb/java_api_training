@@ -21,7 +21,7 @@ public class StartHandler implements HttpHandler {
 
             POST send = new POST();
             send.id = "1";
-            send.url = received.url;
+            send.url = exchange.getLocalAddress().getHostString()+":"+exchange.getLocalAddress().getPort();
             send.message = "Here I am !";
             String body = new ObjectMapper().writeValueAsString(send);
 

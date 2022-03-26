@@ -19,7 +19,8 @@ public class FireHandlerTest {
         "9880"
     })
     void getResponseTest(String port) throws IOException, InterruptedException {
-        HttpServer server = Server.create(Integer.parseInt(port));
+        Server server = new Server();
+        server.create(Integer.parseInt(port));
         Sender sender = new Sender();
 
         HttpResponse<String> response = sender.getRequest("http://localhost:"+port+"/api/game/fire","A1");

@@ -18,7 +18,8 @@ public class StartHandlerTest {
         "9879"
     })
     void postResponseTest(String port) throws IOException, InterruptedException {
-        HttpServer server = Server.create(Integer.parseInt(port));
+        Server server = new Server();
+        server.create(Integer.parseInt(port));
         Sender sender = new Sender();
 
         POST send = new POST();
@@ -31,7 +32,7 @@ public class StartHandlerTest {
         POST mapper = new ObjectMapper().readValue(response.body(),POST.class);
 
         Assertions.assertThat(mapper.id).isEqualTo("1");
-        Assertions.assertThat(mapper.url).isEqualTo("test");
+        Assertions.assertThat(mapper.url).isEqualTo("127.0.0.1:9879");
         Assertions.assertThat(mapper.message).isEqualTo("Here I am !");
     }
 }

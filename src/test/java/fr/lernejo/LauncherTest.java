@@ -15,21 +15,21 @@ class LauncherTest {
     void main() {
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
             .isThrownBy(() -> Launcher.main(new String[0]))
-            .withMessage("Should have at least 1 argument : port number");
+            .withMessage("Mandatory : [0] HTTP port, Optional : [1] Server Address");
     }
 
     @ParameterizedTest
     @CsvSource({
-        "9878, 9878"
+        "9878"
     })
-    void main_test_cases(String a, String b) {
+    void main_test_cases(String a) {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
         String[] test = new String[1];
         test[0] = a;
         Launcher.main(test);
-        Assertions.assertThat(outContent.toString()).isEqualTo(b+"\n");
+        Assertions.assertThat(outContent.toString()).isEqualTo("Server Address : http://localhost:"+a+"\n");
         System.setOut(originalOut);
     }
 }

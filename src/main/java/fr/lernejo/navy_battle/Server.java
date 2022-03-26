@@ -7,7 +7,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
 public class Server {
-    public static HttpServer create(int port) {
+    public void create(int port) {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
             server.createContext("/ping", new PingHandler());
@@ -15,10 +15,8 @@ public class Server {
             server.createContext("/api/game/fire", new FireHandler());
             server.setExecutor(Executors.newSingleThreadExecutor());
             server.start();
-            return server;
         } catch (IOException e) {
             System.out.println("Exception has occured :" + e);
-            return null;
         }
     }
 }
