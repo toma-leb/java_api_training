@@ -7,22 +7,36 @@ import java.net.http.HttpResponse;
 
 public class Client {
 
-    public void start(String ClientAddress, String ServerAddress) throws IOException, InterruptedException {
-        Server server = new Server();
-        server.create(Integer.parseInt(ClientAddress));
+    private String ClientAddress;
+    private String ServerAddress;
+    private final Server client = new Server();
+    private final Sender sender = new Sender();
 
-        Sender sender = new Sender();
+    public void create(String ClientAddress, String ServerAddress) {
+        this.ClientAddress = ClientAddress;
+        this.ServerAddress = ServerAddress;
+
+        this.client.create(Integer.parseInt(this.ClientAddress));
+    }
+
+    public void start() throws IOException, InterruptedException {
 
         POST send = new POST();
         send.id = "0";
-        send.url = ClientAddress;
+        send.url = this.ClientAddress;
         send.message = "Are you there ?";
         String body = new ObjectMapper().writeValueAsString(send);
 
-        HttpResponse<String> response = sender.postRequest(ServerAddress+"/api/game/start", body);
+        HttpResponse<String> response = this.sender.postRequest(this.ServerAddress+"/api/game/start", body);
         POST mapper = new ObjectMapper().readValue(response.body(),POST.class);
-        System.out.println(mapper.id);
-        System.out.println(mapper.message);
-        System.out.println(mapper.url);
+        mapper.print();
+    }
+
+    public void fire(String cell) throws IOException, InterruptedException {
+
+        HttpResponse<String> response = this.sender.getRequest(this.ServerAddress+"/api/game/fire", cell);
+        GET mapper = new ObjectMapper().readValue(response.body(),GET.class);
+        mapper.print();
+
     }
 }

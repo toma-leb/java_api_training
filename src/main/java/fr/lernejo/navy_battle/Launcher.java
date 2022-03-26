@@ -14,7 +14,9 @@ public class Launcher {
         else if (argsLen == 2) {
             Client client = new Client();
             try {
-                client.start(args[0], args[1]);
+                client.create(args[0], args[1]);
+                client.start();
+                client.fire("B2");
             } catch (Exception e) {
                 System.out.println("Unable to initialize game");
             }
