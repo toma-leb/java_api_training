@@ -14,7 +14,6 @@ public class Launcher {
             Board serverBoard = new Board();
             serverBoard.init();
             serverBoard.serverBoard();
-            serverBoard.printBoard();
             serverBoard.check();
         }
         else if (argsLen == 2) {
