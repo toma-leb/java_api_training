@@ -29,7 +29,10 @@ public class Client {
 
         HttpResponse<String> response = this.sender.postRequest(this.ServerAddress+"/api/game/start", body);
         POST mapper = new ObjectMapper().readValue(response.body(),POST.class);
-        mapper.print();
+
+        if (mapper.id.equals("1") && mapper.message.equals("Here I am !")) {
+            System.out.println("Server available. Ready to start.");
+        }
     }
 
     public void fire(String cell) throws IOException, InterruptedException {

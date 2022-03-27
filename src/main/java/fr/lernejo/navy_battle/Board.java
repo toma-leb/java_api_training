@@ -3,49 +3,80 @@ package fr.lernejo.navy_battle;
 import java.util.InvalidPropertiesFormatException;
 
 public class Board {
-    public int[][] board = new int[10][10];
+    private int[][] myBoard = new int[10][10];
+    private int[][] opponentBoard = new int[10][10];
+    private int[][] locationBoat = new int[5][4];
     Boats boats = new Boats();
 
     public void init() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                this.board[i][j] = 0;
+                this.myBoard[i][j] = 0;
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                this.opponentBoard[i][j] = 0;
             }
         }
     }
 
-    public void serverBoard() {
-        this.board = this.boats.implementBoat(this.board,5);
-        this.board = this.boats.implementBoat(this.board,4);
-        this.board = this.boats.implementBoat(this.board,3);
-        this.board = this.boats.implementBoat(this.board,3);
-        this.board = this.boats.implementBoat(this.board,2);
-    }
+    public void fillBoard() {
+        this.myBoard = this.boats.implementBoat(this.myBoard,5);
+        this.myBoard = this.boats.implementBoat(this.myBoard,4);
+        this.myBoard = this.boats.implementBoat(this.myBoard,3);
+        this.myBoard = this.boats.implementBoat(this.myBoard,3);
+        this.myBoard = this.boats.implementBoat(this.myBoard,2);
 
-    public void printBoard() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.out.print(this.board[j][i] + " ");
+        this.locationBoat = this.boats.getLocationBoat();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(this.locationBoat[i][j] + " ");
             }
             System.out.println();
         }
         System.out.println();
     }
 
-    public void check() throws InvalidPropertiesFormatException {
+    public void printBoard() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.print(this.myBoard[j][i] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    public boolean isOver() {
         int res = 0;
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                if (this.board[j][i] == 1) {
+                if (this.myBoard[j][i] == 2) {
                     res +=1;
                 }
             }
         }
 
-        if (res != 17) {
-            throw new InvalidPropertiesFormatException("Board isn't correct");
-        }
+        return res == 17;
     }
+
+    public void hitBoat(int column, int row) {
+        this.myBoard[column][row] = 2;
+    }
+
+    public int[][] getMyBoard() {
+        return this.myBoard;
+    }
+
+    public int[][] getOpponentBoard() {
+        return this.opponentBoard;
+    }
+
+    public int[][] getLocationBoat() {
+        return this.locationBoat;
+    }
+
 
 }
