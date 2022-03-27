@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.InvalidPropertiesFormatException;
 
 class LauncherTest {
 
@@ -22,7 +23,7 @@ class LauncherTest {
     @CsvSource({
         "9878"
     })
-    void main_test_cases(String a) {
+    void main_test_cases(String a) throws InvalidPropertiesFormatException {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));

@@ -1,15 +1,21 @@
 package fr.lernejo.navy_battle;
 
-import com.sun.net.httpserver.HttpServer;
+import java.util.InvalidPropertiesFormatException;
 
 public class Launcher {
-    public static void main(String [] args) {
+
+    public static void main(String [] args) throws InvalidPropertiesFormatException {
         int argsLen = args.length;
 
         if (argsLen == 1) {
             Server server = new Server();
             server.create(Integer.parseInt(args[0]));
             System.out.println("Server Address : http://localhost:"+args[0]);
+            Board serverBoard = new Board();
+            serverBoard.init();
+            serverBoard.serverBoard();
+            serverBoard.printBoard();
+            serverBoard.check();
         }
         else if (argsLen == 2) {
             Client client = new Client();

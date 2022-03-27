@@ -37,6 +37,5 @@ public class Client {
         HttpResponse<String> response = this.sender.getRequest(this.ServerAddress+"/api/game/fire", cell);
         GET mapper = new ObjectMapper().readValue(response.body(),GET.class);
         mapper.print();
-
     }
 }
