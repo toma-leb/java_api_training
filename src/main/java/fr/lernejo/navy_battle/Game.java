@@ -1,7 +1,5 @@
 package fr.lernejo.navy_battle;
 
-import java.util.InvalidPropertiesFormatException;
-
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -48,14 +46,12 @@ public class Game {
             int locMaxX = max(locationBoat[i][0],locationBoat[i][2]);
             int locMinY = min(locationBoat[i][1],locationBoat[i][3]);
             int locMaxY = max(locationBoat[i][1],locationBoat[i][3]);
-            if ((locMinX <= column) && (locMaxX >= column)) {
-                if ((locMinY <= row) && (locMaxY >= row)) {
-                    minX = locMinX;
-                    minY = locMinY;
-                    maxX = locMaxX;
-                    maxY = locMaxY;
-                    found = true;
-                }
+            if ((locMinX <= column) && (locMaxX >= column) && (locMinY <= row) && (locMaxY >= row)) {
+                minX = locMinX;
+                minY = locMinY;
+                maxX = locMaxX;
+                maxY = locMaxY;
+                found = true;
             }
         }
 
@@ -65,20 +61,17 @@ public class Game {
         boolean sunk = false;
         int[][] myBoard = board.getMyBoard();
 
-        if (minX == maxX) {
-            for (int i = minY; i <= maxY; i++) {
-                sunk = myBoard[minX][i] == 2;
-            }
-        } else {
-            for (int i = minX; i <= maxX; i++) {
-                sunk = myBoard[i][minY] == 2;
-            }
+        if (minX == maxX) for (int i = minY; i <= maxY; i++) {
+            sunk = myBoard[minX][i] == 2;
+        }
+        else for (int i = minX; i <= maxX; i++) {
+            sunk = myBoard[i][minY] == 2;
         }
 
         return sunk;
     }
 
-    public boolean isOver() {
+    public Boolean isOver() {
         return board.isOver();
     }
 }

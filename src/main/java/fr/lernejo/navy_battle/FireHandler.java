@@ -23,15 +23,10 @@ public class FireHandler implements HttpHandler {
         if (exchange.getRequestMethod().equals("GET")) {
             List<String> cellHeader = exchange.getRequestHeaders().get("cell");
             String cell = cellHeader.get(0);
-
-            GET send = new GET();
-
-
-            send.consequence = this.game.shooAt(cell);
-            send.shipLeft = this.game.isOver();
-
-            String body = new ObjectMapper().writeValueAsString(send);
-
+            String consequence = this.game.shooAt(cell);
+            Boolean shipLeft = this.game.isOver();
+            String body = "{\"consequence\": \"" + consequence + "\", \"shipLeft\": " + shipLeft + "}";
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
             sender.response(exchange,202, body);
         }
         else {

@@ -1,18 +1,5 @@
 package fr.lernejo;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.net.httpserver.HttpServer;
-
-import fr.lernejo.navy_battle.GET;
-import fr.lernejo.navy_battle.Sender;
-import fr.lernejo.navy_battle.Server;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import java.io.IOException;
-import java.net.http.HttpResponse;
-
 public class FireHandlerTest {
     /*@ParameterizedTest
     @CsvSource({

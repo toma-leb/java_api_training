@@ -1,9 +1,11 @@
 package fr.lernejo.navy_battle;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Map;
 
 public class Client {
 
@@ -15,30 +17,24 @@ public class Client {
     public void create(String ClientAddress, String ServerAddress) {
         this.ClientAddress = ClientAddress;
         this.ServerAddress = ServerAddress;
-
         this.client.create(Integer.parseInt(this.ClientAddress));
     }
 
     public void start() throws IOException, InterruptedException {
 
-        POST send = new POST();
-        send.id = "0";
-        send.url = this.ClientAddress;
-        send.message = "Are you there ?";
-        String body = new ObjectMapper().writeValueAsString(send);
+        String body = "{\"id\":\"0\", \"url\":\"" + this.ClientAddress + "\", \"message\":\"Are you there ?\"}";
 
         HttpResponse<String> response = this.sender.postRequest(this.ServerAddress+"/api/game/start", body);
-        POST mapper = new ObjectMapper().readValue(response.body(),POST.class);
+        Map<String, String> map = new ObjectMapper().readValue(response.body(), new TypeReference<>() {});
 
-        if (mapper.id.equals("1") && mapper.message.equals("Here I am !")) {
-            System.out.println("Server available. Ready to start.");
+        if (map.get("id").equals("1") && map.get("message").equals("Here I am !")) {
+            System.out.println("Ready to start.");
         }
     }
 
     public void fire(String cell) throws IOException, InterruptedException {
-
         HttpResponse<String> response = this.sender.getRequest(this.ServerAddress+"/api/game/fire", cell);
-        GET mapper = new ObjectMapper().readValue(response.body(),GET.class);
-        mapper.print();
+        Map<String, String> map = new ObjectMapper().readValue(response.body(), new TypeReference<>() {});
+        System.out.println(map);
     }
 }

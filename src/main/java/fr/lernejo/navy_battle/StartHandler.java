@@ -1,12 +1,13 @@
 package fr.lernejo.navy_battle;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 
 import java.io.IOException;
-import java.util.logging.Handler;
+import java.util.Map;
 
 
 public class StartHandler implements HttpHandler {
@@ -16,15 +17,12 @@ public class StartHandler implements HttpHandler {
         Sender sender = new Sender();
 
         if (exchange.getRequestMethod().equals("POST")) {
-            String request = StreamReader.toString(exchange.getRequestBody());
-            POST received = new ObjectMapper().readValue(request,POST.class);
+            String response = StreamReader.toString(exchange.getRequestBody());
+            Map<String, String> map = new ObjectMapper().readValue(response, new TypeReference<>() {});
 
-            POST send = new POST();
-            send.id = String.valueOf(Integer.parseInt(received.id) + 1);
-            send.url = exchange.getLocalAddress().getHostString()+":"+exchange.getLocalAddress().getPort();
-            send.message = "Here I am !";
-            String body = new ObjectMapper().writeValueAsString(send);
-
+            String id = String.valueOf(Integer.parseInt(map.get("id")) + 1);
+            String url = exchange.getLocalAddress().getHostString()+":"+exchange.getLocalAddress().getPort();
+            String body = "{\"id\":\""+id+"\", \"url\":\"" + url + "\", \"message\":\"Here I am !\"}";
             sender.response(exchange,202, body);
         }
         else {
